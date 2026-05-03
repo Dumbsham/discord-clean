@@ -106,7 +106,7 @@ async def on_ready():
 # ══════════════════════════════════════════════════════════════════════════════
 @tasks.loop(minutes=1)
 async def daily_announcement():
-    now_utc = datetime.datetime.utcnow()
+    now_utc = datetime.datetime.now(datetime.UTC)
     if now_utc.hour != ANNOUNCE_HOUR_UTC or now_utc.minute != ANNOUNCE_MINUTE_UTC:
         return
 
@@ -155,7 +155,7 @@ async def daily_announcement():
                 title="📋 Daily Task Report — 10 PM IST",
                 description="\n".join(lines),
                 color=discord.Color.blurple(),
-                timestamp=datetime.datetime.utcnow()
+               timestamp=datetime.datetime.now(datetime.UTC)
             )
             embed.set_footer(text="Keep going! Tomorrow is a new day.")
             await channel.send(embed=embed)
@@ -201,7 +201,7 @@ async def daily_announcement():
                     title="📊 Weekly Task Summary",
                     description="\n".join(lines_w),
                     color=discord.Color.gold(),
-                    timestamp=datetime.datetime.utcnow()
+                    timestamp=datetime.datetime.now(datetime.UTC)
                 )
                 embed_w.set_footer(text="New week starts tomorrow. Set new goals!")
                 await channel.send(embed=embed_w)
@@ -306,7 +306,7 @@ async def task_done(interaction: discord.Interaction, title: str):
             return
         conn.execute(
             "UPDATE tasks SET done=1, done_at=? WHERE id=?",
-            (datetime.datetime.utcnow().isoformat(), task["id"])
+           (datetime.datetime.now(datetime.UTC).isoformat(), task["id"])
         )
 
     await interaction.response.send_message(
