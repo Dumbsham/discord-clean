@@ -21,9 +21,9 @@ import sqlite3
 import time
 import datetime
 import os
-from dotenv import load_dotenv
+
 # ── Config ────────────────────────────────────────────────────────────────────
-load_dotenv();
+
 BOT_TOKEN=os.getenv("BOT_TOKEN")
 XP_PER_MINUTE = 10          # XP awarded per minute of study
 DB_PATH = "study_bot.db"
